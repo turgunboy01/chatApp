@@ -43,7 +43,7 @@ export const useChatStore = create((set, get) => ({
         messageData
       );
 
-      set({ message: [...messages, res.data] });
+      set({ messages: [...messages, res.data] });
     } catch (error) {
       toast.error(error.response.message);
     }
@@ -56,6 +56,7 @@ export const useChatStore = create((set, get) => ({
     const socket = useAuthStore.getState().socket;
 
     socket.on("newMessage", (newMessage) => {
+      if (newMessage.senderId !== selectedUser._id) return;
       set({
         messages: [...get().messages, newMessage],
       });

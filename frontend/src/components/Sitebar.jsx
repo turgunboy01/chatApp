@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useChatStore } from "../store/useChatStore";
 import SitebarSkeleton from "./skelaton/SitebarSkeleton";
 import { Users } from "lucide-react";
@@ -10,11 +10,17 @@ const Sitebar = () => {
     useChatStore();
 
   const { onlineUsers } = useAuthStore();
+  const [showOnlineOnly, setShowOnlineOnly] = useState(false);
 
   useEffect(() => {
     getUsers();
   }, [getUsers]);
   if (isUserLoading) return <SitebarSkeleton />;
+
+  const filteredUsers = showOnlineOnly
+    ? users.filter((user) => onlineUsers.includes(user._id))
+    : users;
+
   return (
     <div className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
       <div className="border-b w-full p-5 border-base-300">
@@ -22,10 +28,24 @@ const Sitebar = () => {
           <Users className="w-6 h-6" />
           <span className=" font-medium hidden lg:block">Contacts</span>
         </div>
+        <div className="mt-3 hidden lg:flex items-center gap-2">
+          <label className="cursor-pointer flex items-center gap-2">
+            <input
+              type="checkbox"
+              className="checkbox checkbox-sm"
+              checked={showOnlineOnly}
+              onChange={(e) => setShowOnlineOnly(e.target.checked)}
+            />
+            <span className="text-sm">Show online only</span>
+          </label>
+          <span className="text-xs text-zinc-500">
+            ({onlineUsers.length - 1} online)
+          </span>
+        </div>
       </div>
 
       <div className="overflow-y-auto w-full py-3">
-        {users.map((user) => (
+        {filteredUsers.map((user) => (
           <button
             key={user._id}
             className={` w-full p-3 flex gap-3 items-center hover:bg-base-300 transition-colors ${
@@ -54,6 +74,9 @@ const Sitebar = () => {
             </div>
           </button>
         ))}
+        {filteredUsers.length == 0 && (
+          <div className="text-center py-4 text-zinc-500"> No online users</div>
+        )}
       </div>
     </div>
   );

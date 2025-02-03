@@ -28,7 +28,6 @@ const ChatContainer = () => {
     subscribeToMessages();
     return () => unsubscribeFromMessages();
   }, [subscribeToMessages, unsubscribeFromMessages]);
-  console.log(messages);
 
   useEffect(() => {
     if (messageEndRef.current && messages) {
