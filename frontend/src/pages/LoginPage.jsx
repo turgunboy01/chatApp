@@ -50,7 +50,7 @@ const LoginPage = () => {
                 </div>
                 <input
                   type="text"
-                  className=" border-none outline-0 w-full  pl-10 "
+                  className=" border-none outline-0 w-full  pl-10  bg-transparent"
                   required
                   placeholder="jhoneDoe@gmail.com"
                   value={formData.email}
@@ -70,7 +70,7 @@ const LoginPage = () => {
                 </div>
                 <input
                   type={showPassword ? "password" : "text"}
-                  className=" border-none outline-0 w-full  pl-10 "
+                  className=" border-none outline-0 w-full  pl-10  bg-transparent"
                   placeholder="Jhone Doe"
                   value={formData.password}
                   onChange={(e) =>
@@ -93,7 +93,7 @@ const LoginPage = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-[#7480ff] p-3 rounded-md cursor-pointer flex items-center justify-center"
+              className="w-full bg-[#7480ff] text-white p-3 rounded-md cursor-pointer flex items-center justify-center"
               disabled={isLoggingIng}
             >
               {isLoggingIng ? (
@@ -108,9 +108,9 @@ const LoginPage = () => {
           </form>
           <div className="text-center">
             <p className="text-base text-gray-300 font-semibold">
-              Don't  have an account?
+              Don't have an account?
               <Link to={"/signup"} className="text-[#7480ff] pl-2">
-               Create account
+                Create account
               </Link>
             </p>
           </div>
